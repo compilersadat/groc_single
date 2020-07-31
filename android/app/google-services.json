@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "303119391718",
+    "firebase_url": "https://dailymaart.firebaseio.com",
+    "project_id": "dailymaart",
+    "storage_bucket": "dailymaart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303119391718:android:2ac6ad915fb8809f7b9427",
+        "android_client_info": {
+          "package_name": "com.dailymaart.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303119391718-9e8dt2bkt4vqc3v07pctkbhsfr17n0a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLTqjzr7AZ-Q36TtY5bo1xojaBecZyQoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303119391718-9e8dt2bkt4vqc3v07pctkbhsfr17n0a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
