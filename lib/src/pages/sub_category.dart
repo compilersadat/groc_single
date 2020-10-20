@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/models/sub_category.dart';
 import '../controllers/sub_category_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
@@ -18,7 +19,6 @@ class SubCategoryWidget extends StatefulWidget {
 
 class _SubCategoryWidgetState extends StateMVC<SubCategoryWidget> {
   SubCategoryController _con;
-
   _SubCategoryWidgetState() : super(SubCategoryController()) {
     _con = controller;
   }
@@ -27,7 +27,6 @@ class _SubCategoryWidgetState extends StateMVC<SubCategoryWidget> {
     super.initState();
     //_con.getSubCat(widget.routeArgument.id);
     _con.ListenForSubCat(widget.routeArgument.id);
-    print(_con.subcats);
   }
 
   @override
@@ -70,6 +69,7 @@ class _SubCategoryWidgetState extends StateMVC<SubCategoryWidget> {
       body: _con.subcats.isEmpty
           ? CircularLoadingWidget(height: 150)
           : GridView.builder(
+              // reverse: true,
               padding: EdgeInsets.only(left: 10, right: 10, top: 40),
               itemCount: _con.subcats.length,
               itemBuilder: (context, index) => SubCategoryItemWidget(

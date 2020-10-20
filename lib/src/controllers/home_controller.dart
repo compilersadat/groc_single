@@ -30,7 +30,6 @@ class HomeController extends ControllerMVC {
     getSlides();
   }
 
-
   Future<void> listenForCategories() async {
     final Stream<Category> stream = await getCategories();
     stream.listen((Category _category) {
@@ -41,14 +40,16 @@ class HomeController extends ControllerMVC {
   }
 
   Future<void> listenForTopMarkets() async {
-    final Stream<Market> stream = await getNearMarkets(deliveryAddress.value, deliveryAddress.value);
+    final Stream<Market> stream =
+        await getNearMarkets(deliveryAddress.value, deliveryAddress.value);
     stream.listen((Market _market) {
       setState(() => topMarkets.add(_market));
     }, onError: (a) {}, onDone: () {});
   }
 
   Future<void> listenForPopularMarkets() async {
-    final Stream<Market> stream = await getPopularMarkets(deliveryAddress.value);
+    final Stream<Market> stream =
+        await getPopularMarkets(deliveryAddress.value);
     stream.listen((Market _market) {
       setState(() => popularMarkets.add(_market));
     }, onError: (a) {}, onDone: () {});
@@ -62,7 +63,8 @@ class HomeController extends ControllerMVC {
   }
 
   Future<void> listenForTrendingProducts() async {
-    final Stream<Product> stream = await getTrendingProducts(deliveryAddress.value);
+    final Stream<Product> stream =
+        await getTrendingProducts(deliveryAddress.value);
     stream.listen((Product _product) {
       setState(() => trendingProducts.add(_product));
     }, onError: (a) {
@@ -82,7 +84,6 @@ class HomeController extends ControllerMVC {
     });
   }
 
-
   Future getSlides() async {
     Uri uri = Helper.getUri('api/get-slides');
 
@@ -97,6 +98,7 @@ class HomeController extends ControllerMVC {
       print(slides);
     }
   }
+
   Future<void> refreshHome() async {
     setState(() {
       categories = <Category>[];
@@ -104,7 +106,7 @@ class HomeController extends ControllerMVC {
       popularMarkets = <Market>[];
       recentReviews = <Review>[];
       trendingProducts = <Product>[];
-      slides=[];
+      slides = [];
     });
     await listenForTopMarkets();
     await listenForTrendingProducts();

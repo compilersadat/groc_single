@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -30,9 +32,11 @@ class SplashScreenState extends StateMVC<SplashScreen> {
         progress += _progress;
       });
       if (progress == 100) {
-        try {
-          Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
-        } catch (e) {}
+        Timer(Duration(seconds: 2), () {
+          try {
+            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
+          } catch (e) {}
+        });
       }
     });
   }
@@ -45,23 +49,10 @@ class SplashScreenState extends StateMVC<SplashScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
         ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset(
-                'assets/img/logo.jpeg',
-                width: 300,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(height: 50),
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
-              ),
-            ],
-          ),
+        child: Image.asset(
+          'assets/img/splash.jpeg',
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
         ),
       ),
     );

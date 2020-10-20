@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/models/user.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/BlockButtonWidget.dart';
 import '../helpers/app_config.dart' as config;
+import '../controllers/mobileController.dart';
 
-class MobileVerification2 extends StatelessWidget {
+class MobileVerification2 extends StatefulWidget {
+  final String phone;
+  MobileVerification2({Key key, this.phone}) : super(key: key);
+
+  @override
+  _MobileVerification2State createState() => _MobileVerification2State();
+}
+
+class _MobileVerification2State extends StateMVC<MobileVerification2> {
+  MobileController _con;
+  _MobileVerification2State() : super(MobileController()) {
+    _con = controller;
+  }
+  SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _ac = config.App(context);
@@ -35,11 +59,13 @@ class MobileVerification2 extends StatelessWidget {
             ),
             SizedBox(height: 50),
             TextField(
+              controller: _con.tcontroller,
               style: Theme.of(context).textTheme.headline5,
               textAlign: TextAlign.center,
               decoration: new InputDecoration(
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).focusColor.withOpacity(0.2)),
                 ),
                 focusedBorder: new UnderlineInputBorder(
                   borderSide: new BorderSide(
@@ -51,18 +77,21 @@ class MobileVerification2 extends StatelessWidget {
             ),
             SizedBox(height: 15),
             Text(
-              'SMS has been sent to +155 4585 555',
+              'SMS has been sent to ${widget.phone}',
               style: Theme.of(context).textTheme.caption,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 80),
             new BlockButtonWidget(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
+                _con.verifyOtp();
               },
               color: Theme.of(context).accentColor,
               text: Text(S.of(context).verify.toUpperCase(),
-                  style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Theme.of(context).primaryColor))),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .merge(TextStyle(color: Theme.of(context).primaryColor))),
             ),
           ],
         ),

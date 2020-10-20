@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:markets/src/pages/mobile_verification.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -32,7 +33,10 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
           centerTitle: true,
           title: Text(
             S.of(context).settings,
-            style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3)),
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                .merge(TextStyle(letterSpacing: 1.3)),
           ),
         ),
         body: currentUser.value.id == null
@@ -46,7 +50,8 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                       child: SearchBarWidget(),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -74,18 +79,26 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                                   Navigator.of(context).pushNamed('/Profile');
                                 },
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage(currentUser.value.image.thumb),
+                                  backgroundImage: NetworkImage(
+                                      currentUser.value.image.thumb),
                                 ),
                               )),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(6),
-                        boxShadow: [BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)],
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(0.15),
+                              offset: Offset(0, 3),
+                              blurRadius: 10)
+                        ],
                       ),
                       child: ListView(
                         shrinkWrap: true,
@@ -119,7 +132,8 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                             ),
                             trailing: Text(
                               currentUser.value.name,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                           ListTile(
@@ -131,11 +145,15 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                             ),
                             trailing: Text(
                               currentUser.value.email,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                           ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, "/MobileVerification");
+                            },
                             dense: true,
                             title: Text(
                               S.of(context).phone,
@@ -143,7 +161,8 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                             ),
                             trailing: Text(
                               currentUser.value.phone,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                           ListTile(
@@ -154,10 +173,12 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             trailing: Text(
-                              Helper.limitString(currentUser.value.address ?? S.of(context).unknown),
+                              Helper.limitString(currentUser.value.address ??
+                                  S.of(context).unknown),
                               overflow: TextOverflow.fade,
                               softWrap: false,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                           ListTile(
@@ -171,18 +192,26 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                               Helper.limitString(currentUser.value.bio),
                               overflow: TextOverflow.fade,
                               softWrap: false,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(6),
-                        boxShadow: [BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)],
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(0.15),
+                              offset: Offset(0, 3),
+                              blurRadius: 10)
+                        ],
                       ),
                       child: ListView(
                         shrinkWrap: true,
@@ -214,19 +243,30 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             trailing: Text(
-                              _con.creditCard.number.isNotEmpty ? _con.creditCard.number.replaceRange(0, _con.creditCard.number.length - 4, '...') : '',
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              _con.creditCard.number.isNotEmpty
+                                  ? _con.creditCard.number.replaceRange(0,
+                                      _con.creditCard.number.length - 4, '...')
+                                  : '',
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                         ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(6),
-                        boxShadow: [BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)],
+                        boxShadow: [
+                          BoxShadow(
+                              color:
+                                  Theme.of(context).hintColor.withOpacity(0.15),
+                              offset: Offset(0, 3),
+                              blurRadius: 10)
+                        ],
                       ),
                       child: ListView(
                         shrinkWrap: true,
@@ -260,12 +300,14 @@ class _SettingsWidgetState extends StateMVC<SettingsWidget> {
                             ),
                             trailing: Text(
                               S.of(context).english,
-                              style: TextStyle(color: Theme.of(context).focusColor),
+                              style: TextStyle(
+                                  color: Theme.of(context).focusColor),
                             ),
                           ),
                           ListTile(
                             onTap: () {
-                              Navigator.of(context).pushNamed('/DeliveryAddresses');
+                              Navigator.of(context)
+                                  .pushNamed('/DeliveryAddresses');
                             },
                             dense: true,
                             title: Row(

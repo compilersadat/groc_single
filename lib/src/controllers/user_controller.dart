@@ -21,7 +21,6 @@ class UserController extends ControllerMVC {
   OverlayEntry loader;
 
   UserController() {
-
     loader = Helper.overlayLoader(context);
     loginFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -33,14 +32,16 @@ class UserController extends ControllerMVC {
     });
   }
 
-  GoogleSignIn _googleSignIn=GoogleSignIn(
+  GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
       'email',
       'https://www.googleapis.com/auth/contacts.readonly',
-    ],);
+    ],
+  );
   final facebookLogin = FacebookLogin();
-  Future <void> fbLogin() async{
+  Future<void> fbLogin() async {
     final result = await facebookLogin.logIn(['email']);
+    print(result);
     FocusScope.of(context).unfocus();
     Overlay.of(context).insert(loader);
     switch (result.status) {
@@ -49,21 +50,21 @@ class UserController extends ControllerMVC {
         final graphResponse = await http.get(
             'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${token}');
         final profile = json.decode(graphResponse.body);
-        var name=profile.name;
-        var email=profile.email;
+        var name = profile.name;
+        var email = profile.email;
         FocusScope.of(context).unfocus();
         Overlay.of(context).insert(loader);
         repository.gLogin(name, email).then((value) {
           if (value != null && value.apiToken != null) {
-            Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
+            Navigator.of(scaffoldKey.currentContext)
+                .pushReplacementNamed('/Pages', arguments: 2);
           } else {
             scaffoldKey?.currentState?.showSnackBar(SnackBar(
               content: Text(S.of(context).wrong_email_or_password),
             ));
           }
-
         }).catchError((e) {
-         loader.remove();
+          loader.remove();
           scaffoldKey?.currentState?.showSnackBar(SnackBar(
             content: Text(S.of(context).this_account_not_exist),
           ));
@@ -72,7 +73,7 @@ class UserController extends ControllerMVC {
         });
         break;
       case FacebookLoginStatus.cancelledByUser:
-       loader.remove();
+        loader.remove();
         scaffoldKey?.currentState?.showSnackBar(SnackBar(
           content: Text("Cancelled By You."),
         ));
@@ -85,45 +86,45 @@ class UserController extends ControllerMVC {
         break;
     }
   }
+
   Future<void> handleSignIn() async {
     try {
-      await _googleSignIn.signIn().then((result) =>
-          result.authentication.then((googleKey){
-            var name=_googleSignIn.currentUser.displayName;
-            var email=_googleSignIn.currentUser.email;
-            FocusScope.of(context).unfocus();
-            Overlay.of(context).insert(loader);
-            repository.gLogin(name, email).then((value) {
-              if (value != null && value.apiToken != null) {
-                Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
-              } else {
+      await _googleSignIn
+          .signIn()
+          .then((result) => result.authentication.then((googleKey) {
+                var name = _googleSignIn.currentUser.displayName;
+                var email = _googleSignIn.currentUser.email;
+                FocusScope.of(context).unfocus();
+                Overlay.of(context).insert(loader);
+                repository.gLogin(name, email).then((value) {
+                  if (value != null && value.apiToken != null) {
+                    Navigator.of(scaffoldKey.currentContext)
+                        .pushReplacementNamed('/Pages', arguments: 2);
+                  } else {
+                    scaffoldKey?.currentState?.showSnackBar(SnackBar(
+                      content: Text(S.of(context).wrong_email_or_password),
+                    ));
+                  }
+                }).catchError((e) {
+                  loader.remove();
+                  scaffoldKey?.currentState?.showSnackBar(SnackBar(
+                    content: Text(S.of(context).this_account_not_exist),
+                  ));
+                }).whenComplete(() {
+                  Helper.hideLoader(loader);
+                });
+              }).catchError((e) {
+                loader.remove();
                 scaffoldKey?.currentState?.showSnackBar(SnackBar(
-                  content: Text(S.of(context).wrong_email_or_password),
+                  content: Text("Some thing Went Wrong"),
                 ));
-              }
-
-            }).catchError((e) {
-              loader.remove();
-              scaffoldKey?.currentState?.showSnackBar(SnackBar(
-                content: Text(S.of(context).this_account_not_exist),
-              ));
-            }).whenComplete(() {
-              Helper.hideLoader(loader);
-            });
-
-          }).catchError((e){
-            loader.remove();
-            scaffoldKey?.currentState?.showSnackBar(SnackBar(
-              content: Text("Some thing Went Wrong"),
-            ));
-          })
-      ).catchError((e){
+              }))
+          .catchError((e) {
         loader.remove();
         scaffoldKey?.currentState?.showSnackBar(SnackBar(
           content: Text("Some thing Went Wrong"),
         ));
       });
-
     } catch (error) {
       loader.remove();
       scaffoldKey?.currentState?.showSnackBar(SnackBar(
@@ -139,7 +140,8 @@ class UserController extends ControllerMVC {
       Overlay.of(context).insert(loader);
       repository.login(user).then((value) {
         if (value != null && value.apiToken != null) {
-          Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
+          Navigator.of(scaffoldKey.currentContext)
+              .pushReplacementNamed('/Pages', arguments: 2);
         } else {
           scaffoldKey?.currentState?.showSnackBar(SnackBar(
             content: Text(S.of(context).wrong_email_or_password),
@@ -163,7 +165,8 @@ class UserController extends ControllerMVC {
       Overlay.of(context).insert(loader);
       repository.register(user).then((value) {
         if (value != null && value.apiToken != null) {
-          Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
+          Navigator.of(scaffoldKey.currentContext)
+              .pushReplacementNamed('/Pages', arguments: 2);
         } else {
           scaffoldKey?.currentState?.showSnackBar(SnackBar(
             content: Text(S.of(context).wrong_email_or_password),
@@ -188,11 +191,13 @@ class UserController extends ControllerMVC {
       repository.resetPassword(user).then((value) {
         if (value != null && value == true) {
           scaffoldKey?.currentState?.showSnackBar(SnackBar(
-            content: Text(S.of(context).your_reset_link_has_been_sent_to_your_email),
+            content:
+                Text(S.of(context).your_reset_link_has_been_sent_to_your_email),
             action: SnackBarAction(
               label: S.of(context).login,
               onPressed: () {
-                Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Login');
+                Navigator.of(scaffoldKey.currentContext)
+                    .pushReplacementNamed('/Login');
               },
             ),
             duration: Duration(seconds: 10),

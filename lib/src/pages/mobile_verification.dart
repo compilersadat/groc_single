@@ -1,11 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/BlockButtonWidget.dart';
 import '../helpers/app_config.dart' as config;
+import '../controllers/mobileController.dart';
 
-class MobileVerification extends StatelessWidget {
+class MobileVerification extends StatefulWidget {
+  @override
+  _MobileVerificationState createState() => _MobileVerificationState();
+}
+
+class _MobileVerificationState extends StateMVC<MobileVerification> {
+  MobileController _con;
+
+  _MobileVerificationState() : super(MobileController()) {
+    _con = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     final _ac = config.App(context);
@@ -35,59 +48,31 @@ class MobileVerification extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30),
-            DropdownButtonHideUnderline(
-              child: Container(
-                decoration: ShapeDecoration(
-                  shape: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2)),
-                  ),
-                ),
-                child: DropdownButton(
-                  value: '+216',
-                  elevation: 9,
-                  onChanged: (value) {},
-                  items: [
-                    DropdownMenuItem(
-                      value: '+213',
-                      child: SizedBox(
-                        width: _ac.appWidth(70), // for example
-                        child: Text('(+213) - Algeria', textAlign: TextAlign.center),
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: '+216',
-                      child: SizedBox(
-                        width: _ac.appWidth(70), // for example
-                        child: Text('(+216) - Tunisia', textAlign: TextAlign.center),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(height: 30),
             TextField(
+              controller: _con.tcontroller,
               textAlign: TextAlign.center,
               decoration: new InputDecoration(
                 enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2)),
+                  borderSide: BorderSide(
+                      color: Theme.of(context).focusColor.withOpacity(0.2)),
                 ),
                 focusedBorder: new UnderlineInputBorder(
                   borderSide: new BorderSide(
                     color: Theme.of(context).focusColor.withOpacity(0.5),
                   ),
                 ),
-                hintText: '+213 000 000 000',
+                hintText: '+91 800 000 0000',
               ),
             ),
             SizedBox(height: 80),
             new BlockButtonWidget(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/MobileVerification2');
-              },
+              onPressed: () {},
               color: Theme.of(context).accentColor,
               text: Text(S.of(context).submit.toUpperCase(),
-                  style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Theme.of(context).primaryColor))),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .merge(TextStyle(color: Theme.of(context).primaryColor))),
             ),
           ],
         ),

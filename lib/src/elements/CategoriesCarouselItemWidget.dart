@@ -41,7 +41,7 @@ class CategoriesCarouselItemWidget extends StatelessWidget {
                 )
               : CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: category.image.icon,
+                  imageUrl: category.image.url,
                   placeholder: (context, url) => Image.asset(
                     'assets/img/loading.gif',
                     fit: BoxFit.cover,
@@ -49,11 +49,13 @@ class CategoriesCarouselItemWidget extends StatelessWidget {
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
         ),
-        footer: GridTileBar(
-          backgroundColor: Colors.black.withOpacity(0.6),
-          title: Text(
+        footer: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          color: Colors.black.withOpacity(0.6),
+          child: Text(
             category.name,
             textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ),
